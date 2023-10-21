@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Wi-Fi Config Generator</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      form {
+        max-width: 400px;
+        margin: 0 auto;
+      }
+
+      label {
+        display: block;
+        margin-top: 10px;
+      }
+
+      input[type="text"],
+      input[type="password"] {
+        width: 100%;
+        padding: 5px;
+        margin-top: 5px;
+      }
+
+      input[type="checkbox"] {
+        margin-top: 10px;
+      }
+
+      .submit-button {
+        margin-top: 10px;
+        text-align: center;
+      }
+
+      .generated-syntax {
+        margin-top: 20px;
+        text-align: center;
+      }
+
+      .generated-qrcode {
+        margin-top: 20px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Wi-Fi Config Generator</h1>
+    <form method="post">
+      <fieldset>
+        <legend>Network Configuration</legend>
+        <label for="auth_type">Authentication Type:</label>
+        <select name="auth_type" id="auth_type">
+          <option value="WPA">WPA</option>
+          <option value="WPA2-EAP">WPA2-EAP</option>
+          <option value="nopass">No Password</option>
+        </select>
+
+        <label for="ssid">Network SSID:</label>
+        <input type="text" name="ssid" id="ssid" required />
+
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" />
+
+        <input type="checkbox" name="hidden" id="hidden" />
+        <label for="hidden">Hidden SSID</label>
+      </fieldset>
+
+      <fieldset>
+        <legend>WPA2-EAP Parameters</legend>
+        <label for="eap_method">EAP Method:</label>
+        <input type="text" name="eap_method" id="eap_method" />
+
+        <label for="anonymous_identity">Anonymous Identity:</label>
+        <input type="text" name="anonymous_identity" id="anonymous_identity" />
+
+        <label for="identity">Identity:</label>
+        <input type="text" name="identity" id="identity" />
+
+        <label for="phase2_method">Phase 2 Method:</label>
+        <input type="text" name="phase2_method" id="phase2_method" />
+      </fieldset>
+
+      <div class="submit-button">
+        <input type="submit" value="Generate" />
+      </div>
+    </form>
+
+    {% if syntax %}
+    <div class="generated-syntax">
+      <h2>Generated Syntax:</h2>
+      <code>{{ syntax }}</code>
+    </div>
+    {% endif %} {% if qr_code %}
+    <div class="generated-qrcode">
+      <h2>Generated QR Code:</h2>
+      <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code" />
+    </div>
+    {% endif %}
+  </body>
+</html>
